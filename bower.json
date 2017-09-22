@@ -1,0 +1,40 @@
+{
+  "name": "RUSH Car Rental System",
+  "homepage": "https://github.com/danielhax/car-rental",
+  "description": "car rental system project",
+  "main": "",
+  "keywords": [
+    "car",
+    "rental",
+    "webapp"
+  ],
+  "authors": [
+    "Daniel Viernes",
+    "Raph Catapia",
+    "Nicole Reyes"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "install": {
+     "path": "libs",
+     "sources": {
+       "bootstrap": [
+         "bower_components/bootstrap/dist/css/bootstrap.css",
+	 "bower_components/bootstrap/dist/css/bootstrap.min.css",
+         "bower_components/bootstrap/dist/js/bootstrap.js",
+         "bower_components/bootstrap/dist/js/bootstrap.min.js"
+       ],
+       "jquery": [
+         "bower_components/jquery/dist/jquery.js",
+	 "bower_components/jquery/dist/jquery.min.js"
+       ]
+     }
+  }
+}
