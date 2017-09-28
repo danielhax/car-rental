@@ -1,4 +1,6 @@
-
+</div>
+</div>
+<!============================HEADER END===========================->
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
 <div class="about">
@@ -116,3 +118,9 @@
 		 
 	 </div>
 </div>
+
+<script type="text/javascript">
+	$(function(){
+		$(".banner").addClass("banner2");
+	});
+</script>

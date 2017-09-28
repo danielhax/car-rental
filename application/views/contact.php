@@ -1,3 +1,6 @@
+</div>
+</div>
+<!============================HEADER END===========================->
 <div class="contact">
 	<div class="container">
 		<div class="contact-top">
@@ -40,3 +43,9 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		$(function() {
+			$(".banner").addClass("banner2");
+		});
+	</script>

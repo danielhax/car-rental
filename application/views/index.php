@@ -1,25 +1,6 @@
 
 <div  id="top" class="callbacks_container">
-	<ul class="rslides" id="slider3">				
-		<li>
-			<div class="banner-info">
-				<h3>Aliquam ut mauris vestibulum, condimentum neque vitae nulla.</h3>
-				<p>Pellentesque congue libero accumsan porta.</p>
-			</div>
-		</li>
-		<li>
-			<div class="banner-info">
-				<h3>Nam et urna interdum blandit condimentum vivamus neque vitae.</h3>								
-				<p>Sed eu quam ut orci ullamcorper tincidunt quam.</p>
-			</div>
-		</li>
-		<li>
-			<div class="banner-info">
-				<h3>Cras pretium metus sed justo condimentum, sed commodo nulla.</h3>
-				<p>Nulla eu sapien et eros finibus congue.</p>
-			</div>
-		</li>					
-	</ul>
+	<?php $this->view('templates/login_signup_form') ?>
 </div>			
 </div>
 </div>
@@ -153,11 +134,11 @@
 					visibleItems:4,
 					animationSpeed: 1000,
 					autoPlay: true,
-					autoPlaySpeed: 3000,    		
+					autoPlaySpeed: 3000,
 					pauseOnHover: true,
 					enableResponsiveBreakpoints: true,
-					responsiveBreakpoints: { 
-						portrait: { 
+					responsiveBreakpoints: {
+						portrait: {
 							changePoint:480,
 							visibleItems:2
 						}, 

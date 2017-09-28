@@ -1,0 +1,23 @@
+.car-list-row{
+	margin: 10px 0 10px 0;
+}
+
+.card-img-top{
+	max-width: 100%;
+}
+
+.rent-btn{
+	float: right;
+}
+
+/*==========================LOGIN FORM====================================*/
+
+#loginbox{
+	margin-top: 50px;
+	float: right;
+	width: 350px;
+}
+
+#signupbox{
+	float: right;
+}

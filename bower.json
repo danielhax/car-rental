@@ -23,18 +23,21 @@
     "tests"
   ],
   "install": {
-     "path": "libs",
-     "sources": {
-       "bootstrap": [
-         "bower_components/bootstrap/dist/css/bootstrap.css",
-	 "bower_components/bootstrap/dist/css/bootstrap.min.css",
-         "bower_components/bootstrap/dist/js/bootstrap.js",
-         "bower_components/bootstrap/dist/js/bootstrap.min.js"
-       ],
-       "jquery": [
-         "bower_components/jquery/dist/jquery.js",
-	 "bower_components/jquery/dist/jquery.min.js"
-       ]
-     }
+    "path": "libs",
+    "sources": {
+      "bootstrap": [
+        "bower_components/bootstrap/dist/css/bootstrap.css",
+        "bower_components/bootstrap/dist/css/bootstrap.min.css",
+        "bower_components/bootstrap/dist/js/bootstrap.js",
+        "bower_components/bootstrap/dist/js/bootstrap.min.js"
+      ],
+      "jquery": [
+        "bower_components/jquery/dist/jquery.js",
+        "bower_components/jquery/dist/jquery.min.js"
+      ]
+    }
+  },
+  "dependencies": {
+    "validate": "validate.js#^0.11.1"
   }
 }
