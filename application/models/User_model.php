@@ -23,8 +23,25 @@ class User_model extends CI_Model {
 		if(!$this->db->insert('User', $this)){
 			return $this->db->error();
 		} else {
-			return "success!!";
+			return "Successfully registered!";
 		}
+	}
+
+	public function login($email, $password){
+
+		if(!user_exist($email)){
+			return json_encode(array());
+		}
+
+		if(!password_match())
+	}
+
+	public function user_exist($email){
+		$this->db->query("select * from User where email='" . $email . "'");
+	}
+
+	public function password_match($password){
+		
 	}
 }
 ?>
