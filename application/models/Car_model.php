@@ -17,11 +17,14 @@ class Car_model extends CI_Model {
 		$year = $this->input->post('year');
 		$car_variation_fk = $this->input->post('color');
 
-
 		$this->db->insert('users', $this);
 	}
 
-	public function get_type(){
+	public function get_type($type_id){
+		
+	}
+
+	public function get_all_cars(){
 		
 	}
 }

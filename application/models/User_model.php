@@ -1,10 +1,5 @@
 <?php
-class User_model extends CI_Model {
-
-	public $email;
-	public $password;
-	public $first_name;
-	public $last_name;
+class User_model extends CI_Model{
 
 	public function __construct()
 	{
@@ -15,33 +10,58 @@ class User_model extends CI_Model {
 
 	public function insert_user(){
 		
-		$this->email = $this->input->post('email');
-		$this->password = $this->input->post('password');
-		$this->first_name = $this->input->post('first_name');
-		$this->last_name = $this->input->post('last_name');
+		$data = array(
+			'email' => $this->input->post('email'),
+			'password' => $this->input->post('password'),
+			'first_name' => $this->input->post('first_name'),
+			'last_name' => $this->input->post('last_name')
+		);
 		
-		if(!$this->db->insert('User', $this)){
-			return $this->db->error();
+		if(!$this->db->insert('User', $data)){
+			//return $this->db->error();
+			return json_encode(array("success" => false, "message" => "Email is already registered!"));
 		} else {
-			return "Successfully registered!";
+			return json_encode(array("success" => true, "message" => "Registration successful!"));
 		}
 	}
 
-	public function login($email, $password){
+	public function login(){
 
-		if(!user_exist($email)){
-			return json_encode(array());
+		$user_data;
+
+		if(!($user_data = $this->get_row_if_user_exist($this->input->post('email')))){
+			return json_encode(array("success" => false, "message" => "Email is not registered!"));
 		}
 
-		if(!password_match())
+		$this->set_session_data($user_data);
+
+		if(!$this->password_match($this->input->post('password'), $this->session->password)){
+			session_destroy();
+			return json_encode(array("success" => false, "message" => "Incorrect password!"));
+		}
+
+		return json_encode(array("success" => true, "message" => "Login successful!"));
 	}
 
-	public function user_exist($email){
-		$this->db->query("select * from User where email='" . $email . "'");
+	public function get_row_if_user_exist($email){
+		$user_data = $this->db->query("select * from User where email='" . $email . "'")->row();
+		return $user_data;
 	}
 
-	public function password_match($password){
-		
+	public function password_match($inputted_password, $real_password){
+		return $inputted_password == $real_password;
+	}
+
+	public function set_session_data($user_data){
+		// $this->session->set_userdata(array(
+		// 	'email' => $user_data->email,
+		// 	'first_name' => $user_data->first_name,
+		// 	'last_name' => $user_data->last_name,
+		// 	'password' => $user_data->password,
+		// 	'isAdmin' => $user_data->isAdmin
+		// ));
+
+		$this->session = $user_data;
 	}
 }
 ?>

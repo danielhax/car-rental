@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User extends CI_Controller {
+class Admin extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -21,24 +21,12 @@ class User extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->helper('url');
-		$this->load->model('User_model');
+        $this->load->model('User_model');
 	}
 
-	public function login(){
-		if($this->session->has_userdata('email')){
-			return json_encode(array("success" => false, "message" => "A session is logged in"));
-		}
-		else{
-			echo $this->User_model->login();
-		}
-
-		//echo $this->User_model->login();
-
-	}
-
-	public function register()
+	public function index()
 	{
-		echo $this->User_model->insert_user();
+		$this->load->view('admin');
 	}
+
 }
