@@ -1,6 +1,11 @@
-
 <div  id="top" class="callbacks_container">
-	<?php $this->view('templates/login_signup_form') ?>
+	<?php 
+		if(!$this->session->has_userdata('email')){
+			$this->view('templates/login_signup_form');
+		} else {
+			echo "<h1>" . $this->session->email . "</h1>";
+		}
+	?>
 </div>			
 </div>
 </div>

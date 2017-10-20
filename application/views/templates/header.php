@@ -52,6 +52,12 @@
 						<li><a href="cars">Cars</a></li>
 						<li><a href="gallery">Gallery</a></li>
 						<li><a href="contact">Contact Us</a></li>
+						<?php 
+							if($this->session->has_userdata("email")){
+								echo "<li><a href='user/index'>Account</li>";
+								echo "<li><a href='user/logout'>Logout</li>";
+							}
+						 ?>
 					</ul>
 				</div>
 			</nav>

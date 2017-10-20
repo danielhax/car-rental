@@ -153,8 +153,12 @@
                 dataType: 'json',
                 data: $(this).serialize(),
                 success: function(data){
-                    if(data.success != null)
+                    if(data.success != null){
                         alert(data.message);
+
+                        if(data.success == true)
+                            window.location.href = "<?php echo base_url(); ?>";
+                    }
                 },
                 error: function(xhr) {
                     window.location.href = "<?php echo base_url(); ?>";

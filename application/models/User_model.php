@@ -6,7 +6,8 @@ class User_model extends CI_Model{
 		parent::__construct();
 
 		$this->load->database();
-	} 
+	}
+
 
 	public function insert_user(){
 		
@@ -40,7 +41,7 @@ class User_model extends CI_Model{
 			return json_encode(array("success" => false, "message" => "Incorrect password!"));
 		}
 
-		return json_encode(array("success" => true, "message" => "Login successful!"));
+		return json_encode(array("success" => true, "message" => "Login successful!" . $this->session->email));
 	}
 
 	public function get_row_if_user_exist($email){
@@ -53,15 +54,13 @@ class User_model extends CI_Model{
 	}
 
 	public function set_session_data($user_data){
-		// $this->session->set_userdata(array(
-		// 	'email' => $user_data->email,
-		// 	'first_name' => $user_data->first_name,
-		// 	'last_name' => $user_data->last_name,
-		// 	'password' => $user_data->password,
-		// 	'isAdmin' => $user_data->isAdmin
-		// ));
-
-		$this->session = $user_data;
+		$this->session->set_userdata(array(
+			'email' => $user_data->email,
+			'first_name' => $user_data->first_name,
+			'last_name' => $user_data->last_name,
+			'password' => $user_data->password,
+			'isAdmin' => $user_data->isAdmin
+		));
 	}
 }
 ?>

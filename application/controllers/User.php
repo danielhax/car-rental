@@ -25,16 +25,28 @@ class User extends CI_Controller {
 		$this->load->model('User_model');
 	}
 
+	public function index(){
+		if(session_id()){
+			if($this->session->userdata['isAdmin'] == 1)
+				$this->load->view('user/dashboard');
+			else
+				$this->load->view('index');
+		}
+	}
+
 	public function login(){
 		if($this->session->has_userdata('email')){
-			return json_encode(array("success" => false, "message" => "A session is logged in"));
+			echo json_encode(array("success" => false, "message" => "A session is logged in"));
 		}
 		else{
 			echo $this->User_model->login();
 		}
 
-		//echo $this->User_model->login();
+	}
 
+	public function logout(){
+		session_destroy();
+		redirect(site_url(),'refresh');
 	}
 
 	public function register()
