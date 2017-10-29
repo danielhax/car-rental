@@ -44,16 +44,16 @@ class User_model extends CI_Model{
 		return json_encode(array("success" => true, "message" => "Login successful!" . $this->session->email));
 	}
 
-	public function get_row_if_user_exist($email){
+	private function get_row_if_user_exist($email){
 		$user_data = $this->db->query("select * from User where email='" . $email . "'")->row();
 		return $user_data;
 	}
 
-	public function password_match($inputted_password, $real_password){
+	private function password_match($inputted_password, $real_password){
 		return $inputted_password == $real_password;
 	}
 
-	public function set_session_data($user_data){
+	private function set_session_data($user_data){
 		$this->session->set_userdata(array(
 			'email' => $user_data->email,
 			'first_name' => $user_data->first_name,

@@ -10,6 +10,12 @@ class Car_model extends CI_Model {
 	public $total_qty;
 	public $rented_qty;
 
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->load->database();
+	}
 
 	public function insert_car(){
 		$company = $this->input->post('company');
@@ -25,7 +31,14 @@ class Car_model extends CI_Model {
 	}
 
 	public function get_all_cars(){
-		
+		$this->db->select('*');
+		$this->db->from('Car');
+		$this->db->join('CarImage', 'CarImage.id = Car.car_image_fk');
+		$this->db->join('CarType', 'CarType.id = Car.type_fk');
+		$this->db->join('CarVariation', 'CarVariation.id = Car.variation_fk');
+		$query = $this->db->get();
+
+		return $query->result_array();
 	}
 }
 ?>

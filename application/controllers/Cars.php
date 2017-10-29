@@ -18,10 +18,23 @@ class Cars extends CI_Controller {
 	 * map to /index.php/Cars/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->load->model('Car_model');
+	}
+
 	public function index()
 	{
+		$data['cars'] = $this->get_cars();
 		$this->load->view('templates/header.php');
-		$this->load->view('cars');
+		$this->load->view('cars', $data);
 		$this->load->view('templates/footer.php');
+	}
+
+	public function get_cars(){
+		return $this->Car_model->get_all_cars();
 	}
 }

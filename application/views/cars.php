@@ -1,6 +1,8 @@
 </div>
 </div>
 <!============================HEADER END===========================->
+<script type="text/javascript">
+</script>
 <div class="services">
 	<div class="container">
 		<h2>Services</h2>
@@ -8,18 +10,25 @@
 			<li><a href="index.html">Home</a></li>
 			<li class="active">Services</li>						  
 		</ol>
-		<div class="row">
+		<?php 
+			$item_ctr = 0;
+			foreach ($cars as $car) :
+				if($item_ctr = 0 || ($item_ctr % 3) == 0){
+					echo "<div class=\"row car-list-row\">";
+				}
+		?>
+
 			<div class="col-md-4 car-card">
 				<div class="card" style="width: 20rem;">
-					<img class="card-img-top" src="images/audi.jpg" alt="Card image cap">
+					<img class="card-img-top" src=<?="images/".$car["image_name"]; ?> alt="Card image cap">
 					<div class="card-block">
-						<h4 class="card-title">Car name</h4>
-						<p class="card-text">Car description</p>
+						<h3 class="card-title"><?=$car["company"]." ".$car["model"] ?></h4>
 					</div>
 					<ul class="list-group list-group-flush">
-						<li class="list-group-item">Car info 1</li>
-						<li class="list-group-item">Car info 2</li>
-						<li class="list-group-item">Car info 3</li>
+						<li class="list-group-item">Year: <?=$car["year"]; ?></li>
+						<li class="list-group-item">Type: <?=$car["type"]; ?></li>
+						<li class="list-group-item">No. of seats: <?=$car["number_of_seats"]; ?></li>
+						<li class="list-group-item">No. of seats: <?=$car["number_of_seats"]; ?></li>
 					</ul>
 					<div class="card-block">
 						<a href="#" class="card-link btn btn-default">Info</a>
@@ -27,99 +36,15 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4 car-card">
-				<div class="card" style="width: 20rem;">
-					<img class="card-img-top" src="images/audi.jpg" alt="Card image cap">
-					<div class="card-block">
-						<h4 class="card-title">Car name</h4>
-						<p class="card-text">Car description</p>
-					</div>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">Car info 1</li>
-						<li class="list-group-item">Car info 2</li>
-						<li class="list-group-item">Car info 3</li>
-					</ul>
-					<div class="card-block">
-						<a href="#" class="card-link btn btn-default">Info</a>
-						<a href="#" class="card-link btn btn-primary">Rent Now</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 car-card">
-				<div class="card" style="width: 20rem;">
-					<img class="card-img-top" src="images/audi.jpg" alt="Card image cap">
-					<div class="card-block">
-						<h4 class="card-title">Car name</h4>
-						<p class="card-text">Car description</p>
-					</div>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">Car info 1</li>
-						<li class="list-group-item">Car info 2</li>
-						<li class="list-group-item">Car info 3</li>
-					</ul>
-					<div class="card-block">
-						<a href="#" class="card-link btn btn-default">Info</a>
-						<a href="#" class="card-link btn btn-primary">Rent Now</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row car-list-row">
-			<div class="col-md-4 car-card">
-				<div class="card" style="width: 20rem;">
-					<img class="card-img-top" src="images/audi.jpg" alt="Card image cap">
-					<div class="card-block">
-						<h4 class="card-title">Car name</h4>
-						<p class="card-text">Car description</p>
-					</div>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">Car info 1</li>
-						<li class="list-group-item">Car info 2</li>
-						<li class="list-group-item">Car info 3</li>
-					</ul>
-					<div class="card-block">
-						<a href="#" class="card-link btn btn-default">Info</a>
-						<a href="#" class="card-link btn btn-primary">Rent Now</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 car-card">
-				<div class="card" style="width: 20rem;">
-					<img class="card-img-top" src="images/audi.jpg" alt="Card image cap">
-					<div class="card-block">
-						<h4 class="card-title">Car name</h4>
-						<p class="card-text">Car description</p>
-					</div>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">Car info 1</li>
-						<li class="list-group-item">Car info 2</li>
-						<li class="list-group-item">Car info 3</li>
-					</ul>
-					<div class="card-block">
-						<a href="#" class="card-link btn btn-default">Info</a>
-						<a href="#" class="card-link btn btn-primary">Rent Now</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 car-card">
-				<div class="card" style="width: 20rem;">
-					<img class="card-img-top" src="images/audi.jpg" alt="Card image cap">
-					<div class="card-block">
-						<h4 class="card-title">Car name</h4>
-						<p class="card-text">Car description</p>
-					</div>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">Car info 1</li>
-						<li class="list-group-item">Car info 2</li>
-						<li class="list-group-item">Car info 3</li>
-					</ul>
-					<div class="card-block">
-						<a href="#" class="card-link btn btn-default">Info</a>
-						<a href="#" class="card-link btn btn-primary">Rent Now</a>
-					</div>
-				</div>
-			</div>
-		</div>
+
+		<?php
+			if(($item_ctr % 3) == 0){
+				echo "<div>";
+			}
+
+			endforeach; 
+		?>
+
 	</div>  	   
 </div> 
 <script type="text/javascript">
