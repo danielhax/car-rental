@@ -23,6 +23,7 @@ class Cars extends CI_Controller {
 	{
 		parent::__construct();
 
+		$this->load->helper('form');
 		$this->load->model('Car_model');
 	}
 
@@ -36,5 +37,13 @@ class Cars extends CI_Controller {
 
 	public function get_cars(){
 		return $this->Car_model->get_all_cars();
+	}
+
+	public function rent_car(){
+		if(session_id()){
+			
+		} else {
+			$this->load->view('index');
+		}
 	}
 }
