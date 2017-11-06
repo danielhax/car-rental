@@ -40,5 +40,14 @@ class Car_model extends CI_Model {
 
 		return $query->result_array();
 	}
+
+	public function get_car($id){
+		$this->db->select('*');
+		$this->db->from('Car');
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
 }
 ?>

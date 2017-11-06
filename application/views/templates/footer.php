@@ -73,8 +73,6 @@
 
 	});
 </script>
-<script src="js/custom.js"></script>
-<script type="js/requests.js"></script>
 </div>
 </body>
 </html>

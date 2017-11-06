@@ -30,7 +30,7 @@ class User extends CI_Controller {
 			if($this->session->userdata['isAdmin'] == 1)
 				$this->load->view('user/dashboard');
 			else
-				$this->load->view('index');
+				redirect('','refresh');
 		}
 	}
 

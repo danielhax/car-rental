@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<link href="libs/bootstrap/bootstrap.css" rel='stylesheet' type='text/css' />
+	<link href="<?=base_url()?>libs/bootstrap/bootstrap.css" rel='stylesheet' type='text/css' />
 	<!-- jQuery (necessary JavaScript plugins) -->
-	<script src="libs/jquery/jquery.min.js"></script>
-	<script src="libs/bootstrap/bootstrap.js"></script>
+	<script src="<?=base_url()?>libs/jquery/jquery.min.js"></script>
+	<script src="<?=base_url()?>libs/bootstrap/bootstrap.js"></script>
 	<!-- Custom Theme files -->
-	<link href="css/template.css" rel='stylesheet' type='text/css' />
-	<link href="css/style.css" rel='stylesheet' type='text/css' />
-	<link rel="stylesheet" type="text/css" href="css/component.css" />
+	<link href="<?=base_url()?>css/template.css" rel='stylesheet' type='text/css' />
+	<link href="<?=base_url()?>css/style.css" rel='stylesheet' type='text/css' />
+	<link href="<?=base_url()?>css/component.css" rel="stylesheet" type="text/css" />
 	<!-- Custom Theme files -->
 	<!--//theme-style-->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,15 +47,15 @@
 				</div>
 				<div class="collapse navbar-collapse nav-wil" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="<?php echo base_url(); ?>"">Home <span class="sr-only">(current)</span></a></li>
-						<li><a href="about">About</a></li>
-						<li><a href="cars">Cars</a></li>
-						<li><a href="gallery">Gallery</a></li>
-						<li><a href="contact">Contact Us</a></li>
+						<li class="active"><a href="<?=base_url()?>"">Home <span class="sr-only">(current)</span></a></li>
+						<li><a href="<?=base_url();?>about">About</a></li>
+						<li><a href="<?=base_url();?>cars">Cars</a></li>
+						<li><a href="<?=base_url();?>gallery">Gallery</a></li>
+						<li><a href="<?=base_url();?>contact">Contact Us</a></li>
 						<?php 
 							if($this->session->has_userdata("email")){
-								echo "<li><a href='user/index'>Account</a></li>";
-								echo "<li><a href='user/logout'>Logout</a></li>";
+								echo "<li><a href='<?=base_url();?>user/index'>Account</a></li>";
+								echo "<li><a href='<?=base_url();?>user/logout'>Logout</a></li>";
 							}
 						 ?>
 					</ul>

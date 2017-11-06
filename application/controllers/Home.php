@@ -23,7 +23,6 @@ class Home extends CI_Controller {
 		$this->load->helper('form');
 		$this->load->view('templates/header');
 		$this->load->view('index');
-		$this->load->view('templates/modal');
 		$this->load->view('templates/footer');
 	}
 

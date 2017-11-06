@@ -116,10 +116,6 @@
             <?php echo form_close(); ?>
         </div>
     </div>
-
-
-
-
 </div> 
 </div>
 
@@ -137,8 +133,7 @@
                     alert(data.message);
                 },
                 error: function(xhr) {
-                    $("#messageModal").modal('show');
-                    $(".modal-body").text(xhr.responseText);
+                   alert(xhr.responseText);
                 }
             });
             
