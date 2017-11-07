@@ -34,6 +34,9 @@
       "jquery": [
         "bower_components/jquery/dist/jquery.js",
         "bower_components/jquery/dist/jquery.min.js"
+      ],
+      "bootstrap-datepicker": [
+	"bower_components/bootstrap-datepicker/js/**"
       ]
     }
   },

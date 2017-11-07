@@ -64,7 +64,7 @@
 				</div>
 				<div class="modal-body">
 					<!===== Step 1 ====-->
-					<div class="choose-payment-type hidden">
+					<div class="choose-payment-type">
 						<div class="row">
 							<div class="paymentCont">
 								<div class="headingWrap">
@@ -90,7 +90,21 @@
 						</div>
 					</div>
 					<!===== Step 2 ====-->
-					<div class="payment-details-form bank-details">
+					<div class="payment-details-form visa-details hidden">
+						<div class="form-group">
+							<input type="number" name="card-number" placeholder="Credit Card No.">
+						</div>
+						<div class="input-group date">
+						    <input type="text" id="datepicker" class="form-control" value="12-02-2019">
+						    <div class="input-group-addon">
+						        <span class="glyphicon glyphicon-th"></span>
+						    </div>
+						</div>
+						<div class="form-group">
+							<input type="number" name="cvv" placeholder="CVV">
+						</div>
+					</div>
+					<div class="payment-details-form bank-details hidden">
 						<div class="form-group">
 							<input type="text" name="full-name" class="form-control" placeholder="Full Name">
 						</div>
@@ -106,7 +120,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-info" data-dismiss="modal"></span> Close</button>
-					<button type="button" id="step2" class="btn btn-success confirm-payment-btn">Next</span></button>
+					<button type="button" id="step1" class="btn btn-success confirm-payment-btn">Next</span></button>
 				</div>
 			</div>
 		</div>
@@ -121,15 +135,48 @@
 			$('#paymentModal').modal('show');
 		}
 
+		function showPaymentFillupForm(paymentType){
+			if(paymentType == "visa"){
+				$('.visa-details').removeClass('hidden');
+			}
+			else if(paymentType == "master-card"){
+				$('.master-card-details').removeClass('hidden');
+			}
+			else if(paymentType == "bank-transfer"){
+				$('.bank-details').removeClass('hidden');
+			}
+		}
+
+		function showPaymentDetailsConfirmation(){
+
+		}
+
 		$(function(){
 			$(".banner").addClass("banner2");
 
+			$('#datepicker').datepicker({
+				format: "mm/yyyy",
+			    viewMode: "months", 
+			    minViewMode: "months"
+			});
+
 			$('.confirm-payment-btn').click(function(){
+
+				payment = '';
 
 				switch($(this).attr('id')){
 					case 'step1':
-						paymentType = $('input[name="options"]').val();
+						paymentType = $('.paymentMethod.active input[name="options"]').val();
 
+						$('.choose-payment-type').hide();
+
+						showPaymentFillupForm(paymentType);
+
+						$(this).attr('id', 'step2');
+
+						break;
+					case 'step2':
+					
 						$.ajax({
 							url: '<?=base_url();?>' + 'transaction/rent_car/',
 							type: 'GET',
@@ -137,16 +184,10 @@
 							data: {paymentType: paymentType},
 						});
 
-						$(this).attr('id', 'step2');
-
-						break;
-					case 'step2':
 						break;
 					case 'step2p1':
 						break;
 				}
-
-				
 			});
 
 		});
