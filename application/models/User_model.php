@@ -41,7 +41,7 @@ class User_model extends CI_Model{
 			return json_encode(array("success" => false, "message" => "Incorrect password!"));
 		}
 
-		return json_encode(array("success" => true, "message" => "Login successful!" . $this->session->email));
+		return json_encode(array("success" => true, "message" => "Login successful!" . $this->session->id));
 	}
 
 	private function get_row_if_user_exist($email){
@@ -55,6 +55,7 @@ class User_model extends CI_Model{
 
 	private function set_session_data($user_data){
 		$this->session->set_userdata(array(
+			'id' => $user_data->id,
 			'email' => $user_data->email,
 			'first_name' => $user_data->first_name,
 			'last_name' => $user_data->last_name,

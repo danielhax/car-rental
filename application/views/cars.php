@@ -2,6 +2,12 @@
 </div>
 <!============================HEADER END===========================->
 <script type="text/javascript">
+	function checkAvailability(carID, available){
+		if(available == 0){
+			$('button#' + carID).attr('disabled', 'disabled');
+			$('button#' + carID).text('Unavailable');
+		}
+	}
 </script>
 <div class="services">
 	<div class="container">
@@ -17,33 +23,35 @@
 				echo "<div class=\"row car-list-row\">";
 			}
 
-				// echo form_open( base_url('transaction/rent_car/'.$car['id']), array('id' => 'car_'.$car['id'].'_form', 'method' => 'get', 'role' => 'form'));
-			?>
+			$available = $car["total_qty"] - $car["rented_qty"];
+
+		?>
 			<div class="col-md-4 car-card">
 				<div class="card" style="width: 20rem;">
 					<img class="card-img-top" src=<?="images/".$car["image_name"]; ?> alt="Card image cap">
 					<div class="card-block">
-						<h3 class="card-title"><?=$car["company"]." ".$car["model"] ?></h4>
-						</div>
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item">Year: <?=$car["year"]; ?></li>
-							<li class="list-group-item">Type: <?=$car["type"]; ?></li>
-							<li class="list-group-item">No. of seats: <?=$car["number_of_seats"]; ?></li>
-							<li class="list-group-item">Rate(per day): PHP <?=$car["rate"]; ?></li>
-						</ul>
-						<div class="card-block">
-							<a href="#" class="card-link btn btn-default">Info</a>
-							<a href="#" onclick="setChosenCarID(<?=$car['id'];?>)" class="card-link btn btn-primary">Rent Now</a>
-						</div>
+						<h3 class="card-title"><?=$car["company"]." ".$car["model"] ?></h3>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">Year: <?=$car["year"]; ?></li>
+						<li class="list-group-item">Type: <?=$car["type"]; ?></li>
+						<li class="list-group-item">No. of seats: <?=$car["number_of_seats"]; ?></li>
+						<li class="list-group-item">Rate(per day): PHP <?=$car["rate"]; ?></li>
+					</ul>
+					<div class="card-block">
+						<button type="button" class="card-link btn btn-default">Info</button>
+						<button type="button" href="#" id="<?=$car['id'];?>" onclick="setChosenCarID(<?=$car['id'];?>)" class="card-link btn btn-primary">Rent Now</button>
 					</div>
 				</div>
+			</div>
 
 				<?php
-				//form_close();
 
 				if(($item_ctr % 3) == 0){
 					echo "<div>"; //close row
 				}
+
+				echo "<script>checkAvailability(".$car['id'].", ".$available.")</script>";
 
 			endforeach; 
 			?>
@@ -57,14 +65,31 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Select type of payment </h5>
+					<h5 class="modal-title">Set Start and End dates of rent </h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
 					<!===== Step 1 ====-->
-					<div class="choose-payment-type">
+					<div class="set-duration">
+						<label for="start-date">Start Date: </label>
+						<div class="input-group date duration-picker" id="start-date" data-provide="datepicker">
+						    <input type="text" name='date_start' class="form-control">
+						    <div class="input-group-addon">
+						        <span class="glyphicon glyphicon-th"></span>
+						    </div>
+						</div>
+						<label for="end-date">End Date: </label>
+						<div class="input-group date duration-picker" id="end-date" data-provide="datepicker">
+						    <input type="text" name='date_end' class="form-control">
+						    <div class="input-group-addon">
+						        <span class="glyphicon glyphicon-th"></span>
+						    </div>
+						</div>
+					</div>
+					<!===== Step 2 ====-->
+					<div class="choose-payment-type hidden">
 						<div class="row">
 							<div class="paymentCont">
 								<div class="headingWrap">
@@ -89,34 +114,40 @@
 							</div>
 						</div>
 					</div>
-					<!===== Step 2 ====-->
-					<div class="payment-details-form visa-details hidden">
-						<div class="form-group">
-							<input type="number" name="card-number" placeholder="Credit Card No.">
-						</div>
-						<div class="input-group date">
-						    <input type="text" id="datepicker" class="form-control" value="12-02-2019">
-						    <div class="input-group-addon">
-						        <span class="glyphicon glyphicon-th"></span>
-						    </div>
-						</div>
-						<div class="form-group">
-							<input type="number" name="cvv" placeholder="CVV">
-						</div>
+					<!===== Step 3 ====->
+					<div class="payment-details-form credit-card-details hidden">
+						<?=form_open('', array('class' => 'credit-card-form')); ?>
+							<div class="form-group">
+								<input type="text" name="card_number" placeholder="Credit Card No." required>
+							</div>
+							<div class="form-group">
+								<label for="datepicker">Card Expiry: </label>
+								<div class="input-group date" id="datepicker" data-provide="datepicker">
+								    <input type="text" id="expiration-dp" class="form-control" name="card_expiry">
+								    <div class="input-group-addon">
+								        <i class="glyphicon glyphicon-th"></i>
+								    </div>
+								</div>
+							</div>
+							<div class="form-group">
+								<input type="text" name="cvv" placeholder="CVV" required>
+							</div>
+						<?=form_close(); ?>
 					</div>
 					<div class="payment-details-form bank-details hidden">
-						<div class="form-group">
-							<input type="text" name="full-name" class="form-control" placeholder="Full Name">
-						</div>
-						<div class="form-group">
-							<select name="bank" id="bank" class="form-control">
-								<option value="BPI">BPI</option>
-								<option value="BDO">BDO</option>
-							</select>
-						</div>
+						<?=form_open('', array('class' => 'bank-form')); ?>
+							<div class="form-group">
+								<select name="bank" id="bank" class="form-control">
+									<option value="BPI">BPI</option>
+									<option value="BDO">BDO</option>
+								</select>
+							</div>
+						<?=form_close(); ?>
 					</div>
-					<!===== Step 2.1 ====-->
-					<!===== Step 3 ====-->
+					<!===== Step 4 ====-->
+					<div class="transaction-message hidden">
+						<i class="success-icon glyphicon-glyphicon-ok"></i><span>Order successful!</span>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-info" data-dismiss="modal"></span> Close</button>
@@ -128,67 +159,176 @@
 
 	<script type="text/javascript">
 
-		id = null;
+		var car_id = null;
 
 		function setChosenCarID(carID){
-			id = carID;
-			$('#paymentModal').modal('show');
+			if("<?=$this->session->has_userdata('email');?>" == ""){
+				window.location.href = "<?=base_url(); ?>";
+			} else {
+				car_id = carID;
+				$('#paymentModal').modal('show');
+			}
+		}
+
+		function resetModal(){
+			$('#paymentModal').modal('hide');
+			//$('#paymentModal').find('input:text').val('');
+			//$('.duration-picker').datepicker('clearDates');
+			$('#paymentModal .modal-body div').addClass('hidden');
+			$('#paymentModal .set-duration').removeClass('hidden');
 		}
 
 		function showPaymentFillupForm(paymentType){
-			if(paymentType == "visa"){
-				$('.visa-details').removeClass('hidden');
-			}
-			else if(paymentType == "master-card"){
-				$('.master-card-details').removeClass('hidden');
+			if(paymentType == "visa" || paymentType == "master-card"){
+				$('.credit-card-details').removeClass('hidden');
 			}
 			else if(paymentType == "bank-transfer"){
 				$('.bank-details').removeClass('hidden');
 			}
 		}
 
-		function showPaymentDetailsConfirmation(){
-
+		function buildTransactionData(user_id, car_id, start_date, end_date, payment_id){
+			var transaction_data = []
+			// alert(user_id + " " + car_id + " " + start_date + " " + end_date + " " + payment_id);
+			transaction_data['user_fk'] = user_id;
+			transaction_data['car_fk'] = car_id;
+			transaction_data['start_date'] = start_date;
+			transaction_data['end_date'] = end_date;
+			transaction_data['payment_details_fk'] = payment_id;
+			return transaction_data;
 		}
+
+		// function showPaymentDetailsConfirmation(){
+
+		// }
 
 		$(function(){
 			$(".banner").addClass("banner2");
 
 			$('#datepicker').datepicker({
 				format: "mm/yyyy",
-			    viewMode: "months", 
-			    minViewMode: "months"
+			    viewMode: "months",
+			    startDate: '1d'
 			});
 
+			$('.duration-picker').datepicker({
+				format: "mm/dd/yyyy",
+				startDate: '1d'
+			})
+
+			var paymentType = '';
+			var date_start = '';
+			var date_end = '';
+
 			$('.confirm-payment-btn').click(function(){
-
-				payment = '';
-
+				<?php if($this->session->has_userdata('email')){ ?>
 				switch($(this).attr('id')){
 					case 'step1':
-						paymentType = $('.paymentMethod.active input[name="options"]').val();
+						date_start = $('input[name="date_start"]').val();
+						date_end = $('input[name="date_end"]').val();
 
-						$('.choose-payment-type').hide();
-
-						showPaymentFillupForm(paymentType);
-
+						$('.set-duration').addClass('hidden');
+						$('.choose-payment-type').removeClass('hidden');
+						$('#paymentModal .modal-title').text('Choose payment method');
 						$(this).attr('id', 'step2');
 
 						break;
 					case 'step2':
-					
-						$.ajax({
-							url: '<?=base_url();?>' + 'transaction/rent_car/',
-							type: 'GET',
-							dataType: 'JSON',
-							data: {paymentType: paymentType},
-						});
+						paymentType = $('.paymentMethod.active input[name="options"]').val();
+
+						$('.choose-payment-type').addClass('hidden');
+
+						showPaymentFillupForm(paymentType);
+
+						$('#paymentModal .modal-title').text('Enter payment details');
+						$(this).attr('id', 'step3');
 
 						break;
-					case 'step2p1':
+					case 'step3':
+						var paymentDetails = [];
+
+						if(paymentType == "visa" || paymentType == "master-card"){
+							paymentDetails = $('.credit-card-form').serializeArray();
+							paymentDetails.push({name: 'type', value: paymentType});
+							paymentDetails = serializedArrayRefine(paymentDetails);
+						}
+						else if(paymentType == "bank-transfer"){
+							paymentDetails = $('.bank-form').serialize();
+						}
+
+						$.ajax({
+							url: '<?=base_url();?>user/save_credit_card_details',
+							type: 'POST',
+							dataType: 'JSON',
+							data: {paymentDetails: JSON.stringify(paymentDetails)},
+							success: function(data){
+								if(data.success == true){
+
+									// var transaction_data = buildTransactionData(, car_id, start_date, end_date, data.payment_id);
+
+									var transaction_data = [];
+									transaction_data.push({name: 'user_fk', value: <?=$this->session->userdata('id');?>}) ;
+									transaction_data.push({name: 'car_fk', value: car_id});
+									transaction_data.push({name: 'date_start', value: date_start});
+									transaction_data.push({name: 'date_end', value: date_end});
+									transaction_data.push({name: 'payment_details_fk', value: data.payment_id});
+
+									transaction_data = serializedArrayRefine(transaction_data);
+
+									$.ajax({
+										url: '<?=base_url();?>transaction/rent_car',
+										type: 'POST',
+										dataType: 'JSON',
+										data: {transaction_data: JSON.stringify(transaction_data)},
+										success: function(data){
+											if(data.success == true){
+												$.ajax({
+													url: '<?=base_url();?>cars/set_car_rented',
+													type: 'POST',
+													dataType: 'JSON',
+													data: {id: car_id},
+													success: function(data){
+														if(data.success == true){
+															checkAvailability(car_id, data.new_rented);
+															alert(data.message + ' ' + data.new_rented);
+															
+														} else {
+															alert(data.message);
+														}
+													},
+													error: function(xhr){
+														alert("error in renting car " + xhr.responseText);
+													}
+												});
+												
+											} else {
+												resetModal();
+											}
+										},
+										error: function(xhr){
+											alert(xhr.responseText);
+											resetModal();
+										}
+									});
+								}
+							},
+							error: function(xhr){
+								alert(xhr.responseText);
+							}
+						});
+						$('.payment-details-form').addClass('hidden');
+						$('#paymentModal .modal-title').text('Order successful');
+						$(this).attr('id', 'step4');
+						$('transaction-message').removeClass('hidden');
+
+						break;
+					case 'step4':
+						resetModal();
 						break;
 				}
+				<?php } ?>
 			});
 
 		});
 	</script>
+	<script type="text/javascript" src="<?=base_url()?>libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>

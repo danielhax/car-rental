@@ -38,4 +38,22 @@ class Cars extends CI_Controller {
 	public function get_cars(){
 		return $this->Car_model->get_all_cars();
 	}
+
+	public function set_car_rented(){
+		$car_id = $this->input->post('id');
+		$total_qty = $this->Car_model->get_total_qty($car_id);
+		$rented_qty = $this->Car_model->get_rented_qty($car_id);
+		$rented_qty += 1; 
+
+		if($rented_qty > $total_qty){
+			echo json_encode(array("success"=> false, "message"=> "Something went wrong in the renting process."));
+		} else if(!$this->Car_model->set_car_rented($car_id, $rented_qty)){
+			echo json_encode(array("success"=> false, "message"=> "Something went wrong in the updating car details."));
+		}
+		else {
+			echo json_encode(array("success"=> true, "message"=> "Updating car rented quantity successful.", "new_rented" => $total_qty - $rented_qty));
+		}
+
+		
+	}
 }

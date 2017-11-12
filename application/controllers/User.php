@@ -23,6 +23,7 @@ class User extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->model('User_model');
+		$this->load->model('PaymentDetails_model');
 	}
 
 	public function index(){
@@ -52,5 +53,9 @@ class User extends CI_Controller {
 	public function register()
 	{
 		echo $this->User_model->insert_user();
+	}
+
+	public function save_credit_card_details(){
+		echo $this->PaymentDetails_model->save_credit_card_details();
 	}
 }

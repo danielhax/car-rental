@@ -23,7 +23,7 @@ class Car_model extends CI_Model {
 		$year = $this->input->post('year');
 		$car_variation_fk = $this->input->post('color');
 
-		$this->db->insert('users', $this);
+		$this->db->insert('car', $this);
 	}
 
 	public function get_type($type_id){
@@ -48,6 +48,34 @@ class Car_model extends CI_Model {
 		$query = $this->db->get();
 
 		return $query->row();
+	}
+
+	public function set_car_rented($car_id, $qty){
+		$this->db->where('id', $car_id);
+
+		return $this->db->update('Car', array('rented_qty' => $qty));
+	}
+
+	public function get_total_qty($car_id){
+
+		$this->db->select('total_qty');
+		$this->db->from('Car');
+		$this->db->where('id', $car_id);
+
+		return $this->db->get()->row()->total_qty;
+	}
+
+	public function get_rented_qty($car_id){
+
+		$this->db->select('rented_qty');
+		$this->db->from('Car');
+		$this->db->where('id', $car_id);
+
+		return $this->db->get()->row()->rented_qty;
+	}
+
+	public function set_total_qty(){
+
 	}
 }
 ?>

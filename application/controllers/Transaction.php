@@ -8,6 +8,7 @@ class Transaction extends CI_Controller {
 		parent::__construct();
 
 		$this->load->helper('form');
+		$this->load->model('Transaction_model');
 		$this->load->model('Car_model');
 	}
 
@@ -16,12 +17,8 @@ class Transaction extends CI_Controller {
 		
 	}
 
-	public function rent_car($id, $paymentType){
-		if($this->session->userdata('email')){
-			$car_data = $this->Car_model->get_car($id);
-		} else {
-			redirect('','refresh');
-		}
+	public function rent_car(){
+		echo $this->Transaction_model->insert_transaction_details();
 	}
 
 }

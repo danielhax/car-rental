@@ -54,8 +54,11 @@
 						<li><a href="<?=base_url();?>contact">Contact Us</a></li>
 						<?php 
 							if($this->session->has_userdata("email")){
-								echo "<li><a href='<?=base_url();?>user/index'>Account</a></li>";
-								echo "<li><a href='<?=base_url();?>user/logout'>Logout</a></li>";
+								echo "<li><a href='" . base_url() . "user/index'>Account</a></li>";
+								echo "<li><a href='" . base_url() . "user/logout'>Logout</a></li>";
+							}
+							else{
+								echo "<li><a href='" . base_url() . "'>Sign In</a></li>";
 							}
 						 ?>
 					</ul>

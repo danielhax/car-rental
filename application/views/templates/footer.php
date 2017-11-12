@@ -50,9 +50,11 @@
 
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
-	<script src="libs/bootstrap/bootstrap.js"></script>
+	<script src="<?=base_url()?>libs/bootstrap/bootstrap.js"></script>
 
-	<script src="js/responsiveslides.min.js"></script>
+	<script src="<?=base_url()?>js/responsiveslides.min.js"></script>
+
+	<script src="<?=base_url()?>js/custom.js"></script>
 
 	<script>
 		$(function () {
