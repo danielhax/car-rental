@@ -2,8 +2,8 @@
 </div>
 <!============================HEADER END===========================->
 <script type="text/javascript">
-	function checkAvailability(carID, available){
-		if(available == 0){
+	function checkAvailability(carID, isRented){
+		if(isRented == 1){
 			$('button#' + carID).attr('disabled', 'disabled');
 			$('button#' + carID).text('Unavailable');
 		}
@@ -14,21 +14,19 @@
 		<h2>Services</h2>
 		<ol class="breadcrumb">
 			<li><a href="index.html">Home</a></li>
-			<li class="active">Services</li>						  
+			<li class="active">Cars For Rent</li>						  
 		</ol>
 		<?php 
 		$item_ctr = 0;
 		foreach ($cars as $car) :
-			if($item_ctr = 0 || ($item_ctr % 3) == 0){
+			if($item_ctr = 0 || ($item_ctr % 4) == 0){
 				echo "<div class=\"row car-list-row\">";
 			}
 
-			$available = $car["total_qty"] - $car["rented_qty"];
-
 		?>
-			<div class="col-md-4 car-card">
-				<div class="card" style="width: 20rem;">
-					<img class="card-img-top" src=<?="images/".$car["image_name"]; ?> alt="Card image cap">
+			<div class="col-md-3 car-card">
+				<div class="card">
+					<img class="card-img-top" src=<?=base_url()."images/".$car["image_name"]; ?> alt="Card image cap">
 					<div class="card-block">
 						<h3 class="card-title"><?=$car["company"]." ".$car["model"] ?></h3>
 					</div>
@@ -36,6 +34,7 @@
 						<li class="list-group-item">Year: <?=$car["year"]; ?></li>
 						<li class="list-group-item">Type: <?=$car["type"]; ?></li>
 						<li class="list-group-item">No. of seats: <?=$car["number_of_seats"]; ?></li>
+						<li class="list-group-item">Plate No.: <?=$car["plate_no"] ?></li>
 						<li class="list-group-item">Rate(per day): PHP <?=$car["rate"]; ?></li>
 					</ul>
 					<div class="card-block">
@@ -45,16 +44,17 @@
 				</div>
 			</div>
 
-				<?php
+		<?php
+			$item_ctr++;
 
-				if(($item_ctr % 3) == 0){
-					echo "<div>"; //close row
-				}
+			if(($item_ctr % 3) == 0){
+				echo "</div>"; //close row
+			}
 
-				echo "<script>checkAvailability(".$car['id'].", ".$available.")</script>";
+			echo "<script>checkAvailability(".$car['id'].", ".$car['is_rented'].")</script>";
 
-			endforeach; 
-			?>
+		endforeach; 
+		?>
 
 		</div>  	   
 	</div>
@@ -75,14 +75,14 @@
 					<div class="set-duration">
 						<label for="start-date">Start Date: </label>
 						<div class="input-group date duration-picker" id="start-date" data-provide="datepicker">
-						    <input type="text" name='date_start' class="form-control">
+						    <input type="text" name='start_date' class="form-control">
 						    <div class="input-group-addon">
 						        <span class="glyphicon glyphicon-th"></span>
 						    </div>
 						</div>
 						<label for="end-date">End Date: </label>
 						<div class="input-group date duration-picker" id="end-date" data-provide="datepicker">
-						    <input type="text" name='date_end' class="form-control">
+						    <input type="text" name='end_date' class="form-control">
 						    <div class="input-group-addon">
 						        <span class="glyphicon glyphicon-th"></span>
 						    </div>
@@ -217,15 +217,15 @@
 			})
 
 			var paymentType = '';
-			var date_start = '';
-			var date_end = '';
+			var start_date = '';
+			var end_date = '';
 
 			$('.confirm-payment-btn').click(function(){
 				<?php if($this->session->has_userdata('email')){ ?>
 				switch($(this).attr('id')){
 					case 'step1':
-						date_start = $('input[name="date_start"]').val();
-						date_end = $('input[name="date_end"]').val();
+						start_date = $('input[name="start_date"]').val();
+						end_date = $('input[name="end_date"]').val();
 
 						$('.set-duration').addClass('hidden');
 						$('.choose-payment-type').removeClass('hidden');
@@ -269,8 +269,8 @@
 									var transaction_data = [];
 									transaction_data.push({name: 'user_fk', value: <?=$this->session->userdata('id');?>}) ;
 									transaction_data.push({name: 'car_fk', value: car_id});
-									transaction_data.push({name: 'date_start', value: date_start});
-									transaction_data.push({name: 'date_end', value: date_end});
+									transaction_data.push({name: 'start_date', value: start_date});
+									transaction_data.push({name: 'end_date', value: end_date});
 									transaction_data.push({name: 'payment_details_fk', value: data.payment_id});
 
 									transaction_data = serializedArrayRefine(transaction_data);
@@ -289,9 +289,7 @@
 													data: {id: car_id},
 													success: function(data){
 														if(data.success == true){
-															checkAvailability(car_id, data.new_rented);
-															alert(data.message + ' ' + data.new_rented);
-															
+															checkAvailability(car_id, 1);
 														} else {
 															alert(data.message);
 														}

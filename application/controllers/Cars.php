@@ -25,6 +25,7 @@ class Cars extends CI_Controller {
 
 		$this->load->helper('form');
 		$this->load->model('Car_model');
+		$this->load->model('CarImage_model');
 	}
 
 	public function index()
@@ -35,25 +36,69 @@ class Cars extends CI_Controller {
 		$this->load->view('templates/footer.php');
 	}
 
+	public function manage_cars(){
+		if($this->session->userdata('isAdmin') == 1){
+			$data['cars'] = $this->get_cars();
+			$data['carVariations'] = $this->get_car_variations();
+			$this->load->view('templates/user-page-header');
+			$this->load->view('user/manage-cars', $data);
+			$this->load->view('templates/user-page-footer');
+		} else {
+			redirect('','refresh');
+		}
+	}
+
+	public function insert_car(){
+		echo var_dump($this->input->post());
+		// $image_name = $this->input->post('image_name');
+		// $image_id = $this->CarImage_model->insert_image($image_name);
+		// echo $this->Car_model->insert_car($image_id);
+	}
+
+	public function insert_car_variation(){
+		echo $this->Car_model->insert_car_variation();
+	}
+
 	public function get_cars(){
 		return $this->Car_model->get_all_cars();
 	}
 
 	public function set_car_rented(){
 		$car_id = $this->input->post('id');
-		$total_qty = $this->Car_model->get_total_qty($car_id);
-		$rented_qty = $this->Car_model->get_rented_qty($car_id);
-		$rented_qty += 1; 
 
-		if($rented_qty > $total_qty){
-			echo json_encode(array("success"=> false, "message"=> "Something went wrong in the renting process."));
-		} else if(!$this->Car_model->set_car_rented($car_id, $rented_qty)){
+		if(!$this->Car_model->set_car_rented($car_id)){
 			echo json_encode(array("success"=> false, "message"=> "Something went wrong in the updating car details."));
 		}
 		else {
-			echo json_encode(array("success"=> true, "message"=> "Updating car rented quantity successful.", "new_rented" => $total_qty - $rented_qty));
+			echo json_encode(array("success"=> true, "message"=> "Updating car rented quantity successful."));
 		}
-
-		
 	}
+
+	public function get_car_variations(){
+		return $this->Car_model->get_car_variations();
+	}
+
+	public function upload_image()
+    {
+        $config['upload_path']          = './uploads/';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 100;
+        $config['max_width']            = 1024;
+        $config['max_height']           = 768;
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('userfile'))
+        {
+                $error = array('error' => $this->upload->display_errors());
+
+                $this->load->view('upload_form', $error);
+        }
+        else
+        {
+                $data = array('upload_data' => $this->upload->data());
+
+                $this->load->view('upload_success', $data);
+        }
+    }
 }

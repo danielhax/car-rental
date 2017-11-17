@@ -24,15 +24,18 @@ class User extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('User_model');
 		$this->load->model('PaymentDetails_model');
+		$this->load->model('Car_model');
 	}
 
 	public function index(){
+		$this->load->view('templates/user-page-header');
 		if(session_id()){
 			if($this->session->userdata['isAdmin'] == 1)
 				$this->load->view('user/dashboard');
 			else
 				redirect('','refresh');
 		}
+		$this->load->view('templates/user-page-footer');
 	}
 
 	public function login(){
@@ -57,5 +60,9 @@ class User extends CI_Controller {
 
 	public function save_credit_card_details(){
 		echo $this->PaymentDetails_model->save_credit_card_details();
+	}
+
+	public function manage_users(){
+		$this->load->view('user/forms');
 	}
 }

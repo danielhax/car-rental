@@ -1,15 +1,6 @@
 <?php
 class Car_model extends CI_Model {
 
-	public $company;
-	public $model;
-	public $year;
-	public $color;
-	public $type_fk;
-	public $number_of_seats;
-	public $total_qty;
-	public $rented_qty;
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -17,25 +8,48 @@ class Car_model extends CI_Model {
 		$this->load->database();
 	}
 
-	public function insert_car(){
-		$company = $this->input->post('company');
-		$model = $this->input->post('model');
-		$year = $this->input->post('year');
-		$car_variation_fk = $this->input->post('color');
+	public function insert_car($image_id){
+		$data = array('color' => $this->input->post('color'),
+						'plate_no' => $this->input->post('plate_no'),
+						'rate' => $this->input->post('rate'),
+						'is_rented' => 0,
+						'car_image_fk' => $image_id,
+						'car_variation_fk' => $this->input->post('car_variation'));
 
-		$this->db->insert('car', $this);
+		if(!$this->db->insert('Car', $data)){
+			return json_encode(array('success' => false, 'message' => 'Error adding car'));
+		} else {
+			return json_encode(array('success' => true, 'message' => 'Success adding car'));
+		}
 	}
 
-	public function get_type($type_id){
-		
+	public function insert_car_variation(){
+		$data = array('company' => $this->input->post('company'),
+						'model' => $this->input->post('model'),
+						'type' => $this->input->post('type'),
+						'year' => $this->input->post('year'),
+						'number_of_seats' => $this->input->post('number_of_seats'));
+
+		if(!$this->db->insert('CarVariation', $data)){
+			return json_encode(array('success' => false, 'message' => 'Error adding car variation'));
+		} else {
+			return json_encode(array('success' => true, 'message' => 'Success adding variety'));
+		}
+	}
+
+	public function get_car_variations(){
+		$this->db->select('*');
+		$this->db->from('CarVariation');
+		$query = $this->db->get();
+
+		return $query->result_array();
 	}
 
 	public function get_all_cars(){
 		$this->db->select('*');
 		$this->db->from('Car');
 		$this->db->join('CarImage', 'CarImage.id = Car.car_image_fk');
-		$this->db->join('CarType', 'CarType.id = Car.type_fk');
-		$this->db->join('CarVariation', 'CarVariation.id = Car.variation_fk');
+		$this->db->join('CarVariation', 'CarVariation.id = Car.car_variation_fk');
 		$query = $this->db->get();
 
 		return $query->result_array();
@@ -50,32 +64,16 @@ class Car_model extends CI_Model {
 		return $query->row();
 	}
 
-	public function set_car_rented($car_id, $qty){
+	public function set_car_rented($car_id){
 		$this->db->where('id', $car_id);
 
-		return $this->db->update('Car', array('rented_qty' => $qty));
+		return $this->db->update('Car', array('is_rented' => 1));
 	}
 
-	public function get_total_qty($car_id){
-
-		$this->db->select('total_qty');
-		$this->db->from('Car');
+	public function set_car_available($car_id){
 		$this->db->where('id', $car_id);
 
-		return $this->db->get()->row()->total_qty;
-	}
-
-	public function get_rented_qty($car_id){
-
-		$this->db->select('rented_qty');
-		$this->db->from('Car');
-		$this->db->where('id', $car_id);
-
-		return $this->db->get()->row()->rented_qty;
-	}
-
-	public function set_total_qty(){
-
+		return $this->db->update('Car', array('is_rented' => 0));
 	}
 }
 ?>

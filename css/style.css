@@ -3,7 +3,13 @@
 }
 
 .card-img-top{
+	display: block;
+	margin: 0 auto;
 	max-width: 100%;
+}
+
+.card-title{
+	text-align: center;
 }
 
 .rent-btn{
@@ -77,4 +83,18 @@
 .paymentWrap .paymentBtnGroup .paymentMethod .method:hover {
 	border-color: #4cd264;
 	outline: none !important;
+}
+
+/*==========================ADMIN DASHBOARD=======================================*/
+
+.back-to-site-btn{
+	float: right;
+	margin: 10px 10px;
+}
+
+/*==========================MANAGE CARS=======================================*/
+
+.add-new-variation{
+	display: inline-block;
+	margin: 0 15px;
 }

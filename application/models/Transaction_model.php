@@ -14,8 +14,8 @@ class Transaction_model extends CI_Model {
 		$transaction_data = json_decode($this->input->post('transaction_data'), true);
 		$data = array('user_fk' => $transaction_data['user_fk'],
 					'car_fk' => $transaction_data['car_fk'],
-					'date_start' => $transaction_data['date_start'],
-					'date_end' => $transaction_data['date_end'],
+					'start_date' => $transaction_data['start_date'],
+					'end_date' => $transaction_data['end_date'],
 					'payment_details_fk' => $transaction_data['payment_details_fk']);
 
 		if(!$this->db->insert('Transaction', $data)){

@@ -12,11 +12,6 @@ class Transaction extends CI_Controller {
 		$this->load->model('Car_model');
 	}
 
-	public function index()
-	{
-		
-	}
-
 	public function rent_car(){
 		echo $this->Transaction_model->insert_transaction_details();
 	}

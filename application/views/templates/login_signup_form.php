@@ -111,8 +111,6 @@
                 </div>
             </div>
 
-
-
             <?php echo form_close(); ?>
         </div>
     </div>
@@ -152,7 +150,7 @@
                         alert(data.message);
 
                         if(data.success == true)
-                            window.location.href = "<?php echo base_url(); ?>";
+                            window.location.href = "<?php echo base_url(); ?>user";
                     }
                 },
                 error: function(xhr) {
